@@ -21,25 +21,17 @@ export default class MiniMap {
   }
 
   renderElements() {
-    window.core?.state?.beings?.forEach((being) => {
-      this.draw(being);
+    window.core?.elements?.forEach((element) => {
+      this.draw(element);
     });
 
-    window.core?.state?.beings?.forEach((thing) => {
-      this.draw(thing);
-    });
-
-    this.draw(window.core?.state?.beings[0]);
+    this.draw(window.core?.elements[0]);
   }
 
   draw(element) {
-    let indexOfMove = element.runningActions.findIndex((action) => action instanceof Move);
-    let position = {
-      x: element.runningActions[indexOfMove].position.x,
-      y: element.runningActions[indexOfMove].position.y,
-    };
+    let position = element.state.position;
 
     this.context.fillStyle = element.render.miniMapColor;
-    this.context.fillRect(position.x, position.y, this.tileSize, this.tileSize);
+    this.context.fillRect(position?.x, position?.y, this.tileSize, this.tileSize);
   }
 }
