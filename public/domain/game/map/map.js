@@ -1,4 +1,5 @@
 import { setBlocked, setClear, isClear, generateGrid } from './gridFunctions.js';
+import { Move } from '../elements/actions.js';
 import Find from './find.js';
 export default class Map {
   mapSize = 0;
@@ -12,7 +13,7 @@ export default class Map {
   }
 
   moveElement(element, newPosition) {
-    let from = element.state?.position;
+    let from = element.state.position;
     let to = newPosition;
 
     let isAValidFrom = from?.x != undefined && from?.y != undefined;
@@ -38,11 +39,13 @@ export default class Map {
     return true;
   }
   addElement(element) {
-    this.grid = setBlocked(this.grid, element.state.position);
-    this.elements[element.state.position.x + ',' + element.state.position.y] = element;
+    let position = element.state.position;
+    this.grid = setBlocked(this.grid, position);
+    this.elements[position.x + ',' + position.y] = element;
   }
   removeElement(element) {
-    this.grid = setClear(this.grid, element.state.position);
-    this.elements[element.state.position.x + ',' + element.state.position.y] = undefined;
+    let position = element.state.position;
+    this.grid = setClear(this.grid, position);
+    this.elements[position.x + ',' + position.y] = undefined;
   }
 }

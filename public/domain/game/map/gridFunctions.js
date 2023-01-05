@@ -1,12 +1,15 @@
 let setBlocked = function (grid, position) {
+  if (position == undefined) return;
   grid[position?.x][position?.y] = 1;
   return grid;
 };
 let setClear = function (grid, position) {
+  if (position == undefined) return;
   grid[position?.x][position?.y] = 0;
   return grid;
 };
 let isClear = function (grid, position) {
+  if (position == undefined) return;
   return grid[position?.x][position?.y] == 0;
 };
 let generateGrid = function (mapSize) {

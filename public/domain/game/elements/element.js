@@ -1,4 +1,5 @@
 import uuid from '../util/uuid.js';
+import { Move } from './actions.js';
 import Map from '../map/map.js';
 
 export default class Element {
@@ -12,16 +13,19 @@ export default class Element {
       x: 0,
       y: 0,
     },
+    feelings: [],
     age: 0,
     lifespan: 0,
-    clock: 100,
-    viewRange: 3,
+    clock: 30,
+    viewRange: 100,
   };
+  types = [];
   runningActions = [];
   passiveActions = [];
   activeActions = [];
   life;
   logger = false;
+  render = { miniMapColor: 'white' };
   constructor(state) {
     if (state != undefined) {
       this.state = state;
@@ -37,31 +41,24 @@ export default class Element {
     });
   }
   teleport(newPosition) {
-    let actualPosition = this.state.position;
-
-    if (newPosition != undefined) {
-      newPosition = position;
-    } else {
+    if (newPosition == undefined) {
       newPosition = window.core?.map?.find.randomClearLocation();
     }
     this.state.position = newPosition;
-    window.core?.map?.moveElement(this, newPosition);
-  }
-  setDestination(position) {
-    if (position != undefined) {
-      this.state.destination = position;
-    } else {
-      this.state.destination = window.core?.map?.find.randomClearLocation();
-    }
+
+    window.core?.map?.addElement(this);
   }
   speak(message) {
     if (this.logger) {
-      console.log('%c' + this.constructor.name + ' / ' + this.id + ' :', 'color:#9c610a', message);
+      console.log(
+        '%c' + this.constructor.name + ' [' + this.state.feelings + '] :',
+        'color:#9c610a',
+        message,
+      );
     }
   }
   remove() {
-    window.core?.map?.removeElement(this);
     clearInterval(this.life);
-    window.core.beings = window.core.beings.filter((being) => being.id != this.id);
+    window.core.removeAElement(this);
   }
 }

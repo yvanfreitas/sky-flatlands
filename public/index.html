@@ -36,6 +36,7 @@
       import MiniMap from './domain/render/minimap.js';
 
       window.core = new Core();
+      window.core.init();
 
       let screen = document.getElementById('screen');
       window.render = new MiniMap(screen);

@@ -1,46 +1,62 @@
 export default class Move {
   path = [];
   finder = null;
+  destination = { x: 0, y: 0 };
+  position = { x: 0, y: 0 };
+  myself = null;
+  target = null;
 
   constructor() {
     this.path = [];
     this.finder = new PF.AStarFinder();
   }
   run(myself) {
-    if (!this.haveAValidPosition(myself) || !this.haveAValidDestination(myself)) {
-      myself.teleport();
-      myself.setDestination();
-      return;
+    this.myself = myself;
+    this.position = myself.state.position;
+
+    if (this.destination != this.position) {
+      if (this.path.length >= 1) {
+        this.doMovement();
+      } else {
+        this.traceAPath();
+      }
     }
 
-    if (this.path.length >= 1) {
-      this.doMovement(myself);
-      return;
-    }
-
-    let isInTheDestination =
-      myself.state.position?.x == myself.state.destination?.x &&
-      myself.state.position?.y == myself.state.destination?.y;
-    if (isInTheDestination) {
-      myself.setDestination();
-      return;
-    }
-
-    if (!isInTheDestination && this.path.length == 0) {
-      this.traceAPath(myself);
-    }
+    myself.state.position = this.position;
+    myself.state.destination = this.destination;
   }
-
-  traceAPath(myself) {
-    myself.speak(
+  setDestination(position) {
+    if (position != undefined) {
+      this.destination = position;
+    } else {
+      this.destination = window.core?.map?.find.randomClearLocation();
+    }
+    this.traceAPath();
+  }
+  setStaticTarget(position) {
+    if (position == undefined) {
+      return;
+    }
+    this.destination = position;
+    this.traceAPath();
+    if (this.path.length <= 0 || this.path == undefined) {
+      return;
+    }
+    this.destination.x = this.path[this.path.length - 1][0];
+    this.destination.y = this.path[this.path.length - 1][1];
+    this.path.pop();
+  }
+  traceAPath() {
+    if (this.destination == undefined || this.position == undefined) return;
+    this.myself.speak(
       'Saindo de: ' +
-        myself.state.position?.x +
+        this.position?.x +
         ',' +
-        myself.state.position?.y +
+        this.position?.y +
         ' para: ' +
-        myself.state.destination?.x +
+        this.destination?.x +
         ',' +
-        myself.state.destination?.y +
+        this.destination?.y +
         '!',
     );
     let grid = window.core?.map?.grid;
@@ -52,34 +68,34 @@ export default class Move {
       diagonalMovement: PF.DiagonalMovement.Always,
     });
     this.path = pathFinder.findPath(
-      myself.state.position.x,
-      myself.state.position.y,
-      myself.state.destination.x,
-      myself.state.destination.y,
+      this.position.x,
+      this.position.y,
+      this.destination.x,
+      this.destination.y,
       pathFinderGrid,
     );
     this.path.shift();
   }
-  doMovement(myself) {
+  doMovement() {
     let newPosition = {
       x: this.path[0][0],
       y: this.path[0][1],
     };
 
-    let result = window.core?.map?.moveElement(myself, newPosition);
+    let result = window.core?.map?.moveElement(this.myself, newPosition);
     if (result) {
-      myself.state.position = newPosition;
+      this.position = newPosition;
       this.path.shift();
-      //myself.speak('Andei em: ' + myself.state.position.x + ',' + myself.state.position.y + '!');
+      //this.myself.speak('Andei em: ' + this.position.x + ',' + this.position.y + '!');
     } else {
-      myself.speak('O caminho está obstruido. Terei que achar outra rota!');
-      this.traceAPath(myself);
+      this.myself.speak('O caminho está obstruido. Terei que achar outra rota!');
+      //this.traceAPath();
     }
   }
-  haveAValidPosition(myself) {
-    return myself.state.position?.x != undefined && myself.state.position?.y != undefined;
+  haveAValidPosition() {
+    return this.position?.x != undefined && this.position?.y != undefined;
   }
-  haveAValidDestination(myself) {
-    return myself.state.destination?.x != undefined && myself.state.destination?.y != undefined;
+  haveAValidDestination() {
+    return this.destination?.x != undefined && this.destination?.y != undefined;
   }
 }

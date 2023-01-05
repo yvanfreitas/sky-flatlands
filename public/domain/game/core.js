@@ -7,43 +7,57 @@ import Fox from './elements/beings/fox.js';
 import Rabbit from './elements/beings/rabbit.js';
 import Carrot from './elements/things/carrot.js';
 
+import { Move } from './elements/actions.js';
+
 export default class Core {
   state = {
     beings: [],
     things: [],
   };
+  elements = [];
   map = new Map(500);
 
   constructor() {
     let keyboardListener = new KeyboardListener(document);
+  }
+  init() {
     let beingsTypes = [Fox, Rabbit];
     let thingsTypes = [Carrot];
+    let mapSize = this.map.mapSize;
 
-    for (let index = 0; index < 30; index++) {
+    for (let index = 0; index < 50; index++) {
       let being = new beingsTypes[Math.floor(Math.random() * beingsTypes.length)]();
       being.live();
-      this.state.beings.push(being);
-    }
-    this.state.beings[0].logger = true;
+      being.teleport({
+        x: Math.floor(Math.random() * mapSize),
+        y: Math.floor(Math.random() * mapSize),
+      });
 
-    for (let index = 0; index < 300; index++) {
+      let indexOfMove = being.runningActions.findIndex((action) => action instanceof Move);
+      being.runningActions[indexOfMove]?.setDestination();
+
+      this.elements.push(being);
+    }
+
+    for (let index = 0; index < 50; index++) {
       let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
       thing.logger = true;
-      thing.state.position = this.map.find.randomClearLocation();
-      this.map.addElement(thing);
-      this.state.things.push(thing);
+      thing.teleport({
+        x: Math.floor(Math.random() * mapSize),
+        y: Math.floor(Math.random() * mapSize),
+      });
+      this.elements.push(thing);
     }
+
+    this.elements[0].logger = true;
+    this.elements[0].render.miniMapColor = 'purple';
   }
-  removeAThing(thing) {
-    let index = this.state.things.indexOf(thing);
+  removeAElement(element) {
+    window.core?.map?.removeElement(element);
+    let index = this.elements.indexOf(element);
     if (index >= 0) {
-      this.state.things.splice(index, 1);
+      this.elements.splice(index, 1);
     }
-  }
-  removeABeing(being) {
-    let index = this.state.beings.indexOf(being);
-    if (index >= 0) {
-      this.state.beings.splice(index, 1);
-    }
+    element = null;
   }
 }

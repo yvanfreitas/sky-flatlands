@@ -6,6 +6,14 @@ export default class See {
       myself.state.position,
       myself.state.viewRange,
     );
-    myself.speak(this.inSight);
+  }
+  whereIs(type) {
+    let elements = [];
+    elements = this.inSight?.filter((element) => element.types.includes(type));
+    if (elements?.length <= 0 || elements == undefined) {
+      return null;
+    } else {
+      return elements[0];
+    }
   }
 }
