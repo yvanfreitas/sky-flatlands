@@ -29,12 +29,16 @@
   </head>
   <body>
     <h1>VR simulation</h1>
-    <canvas id="screen" width="500" height="500" style="width: 1000px"></canvas>
+    <canvas id="screen" width="500" height="500"></canvas>
 
     <script type="module">
       import Core from './domain/game/core.js';
+      import MiniMap from './domain/render/minimap.js';
 
       window.core = new Core();
+
+      let screen = document.getElementById('screen');
+      window.render = new MiniMap(screen);
     </script>
   </body>
 </html>
