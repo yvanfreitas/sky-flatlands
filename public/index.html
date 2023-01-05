@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Vr simulation</title>
+    <meta charset="utf-8" />
+    <style>
+      #screen {
+        border: 1px solid #cccccc26;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        image-rendering: -moz-crisp-edges;
+        max-width: 100%;
+        height: calc(100vh - 100px);
+        resize: horizontal;
+        background: #131313;
+      }
+      body {
+        text-align: center;
+        background-color: black;
+        color: white;
+      }
+      h1 {
+        font-family: 'Amatic SC', cursive;
+        font-size: xxx-large;
+        margin: 0px;
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>VR simulation</h1>
+    <canvas id="screen" width="500" height="500" style="width: 1000px"></canvas>
+
+    <script type="module">
+      import Core from './domain/game/core.js';
+
+      window.core = new Core();
+    </script>
+  </body>
+</html>
