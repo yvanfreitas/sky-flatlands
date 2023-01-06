@@ -10,10 +10,6 @@ import Carrot from './elements/things/carrot.js';
 import { Move } from './elements/actions.js';
 
 export default class Core {
-  state = {
-    beings: [],
-    things: [],
-  };
   elements = [];
   map = new Map(500);
 
@@ -53,6 +49,7 @@ export default class Core {
     this.elements[0].render.miniMapColor = 'purple';
   }
   removeAElement(element) {
+    window.vrCore.removeElement(element);
     window.core?.map?.removeElement(element);
     let index = this.elements.indexOf(element);
     if (index >= 0) {
