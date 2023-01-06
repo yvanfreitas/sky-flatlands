@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Vr simulation</title>
+    <title>Sky Flatlands</title>
     <meta charset="utf-8" />
     <style>
       #screen {
@@ -8,15 +8,17 @@
         image-rendering: pixelated;
         image-rendering: crisp-edges;
         image-rendering: -moz-crisp-edges;
-        max-width: 100%;
-        height: calc(100vh - 100px);
-        resize: horizontal;
-        background: #131313;
+        height: calc(30vh);
+        background: rgb(0 0 0 / 50%);
+        left: 50px;
+        top: 50px;
+        position: absolute;
       }
       body {
         text-align: center;
         background-color: black;
         color: white;
+        background-color: blueviolet;
       }
       h1 {
         font-family: 'Amatic SC', cursive;
@@ -28,7 +30,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <h1>VR simulation</h1>
     <canvas id="screen" width="500" height="500"></canvas>
 
     <script type="module">

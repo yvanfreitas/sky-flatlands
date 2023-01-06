@@ -15,8 +15,21 @@ export default class MiniMap {
 
     this.renderElements();
 
+    // this.renderCollisionGrid();
+
     requestAnimationFrame(() => {
       this.render();
+    });
+  }
+
+  renderCollisionGrid() {
+    window.core?.map?.grid?.forEach((row, x) => {
+      row.forEach((cell, y) => {
+        if (cell === 1) {
+          this.context.fillStyle = 'blue';
+          this.context.fillRect(x, y, this.tileSize, this.tileSize);
+        }
+      });
     });
   }
 

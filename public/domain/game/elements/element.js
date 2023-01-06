@@ -1,6 +1,7 @@
 import uuid from '../util/uuid.js';
 import { Move } from './actions.js';
 import Map from '../map/map.js';
+import Status from './status.js';
 
 export default class Element {
   id = uuid();
@@ -18,6 +19,8 @@ export default class Element {
     lifespan: 0,
     clock: 30,
     viewRange: 100,
+    status: Status.Stopped,
+    speed: 1,
   };
   types = [];
   runningActions = [];

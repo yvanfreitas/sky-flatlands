@@ -14,6 +14,7 @@ export default class Rabbit extends Element {
     this.types.push(Types.Animal);
     this.types.push(Types.Herbivorous);
     this.render.miniMapColor = 'gray';
+    this.state.speed = 2;
 
     this.state.feelings.push(Feelings.Hungry);
   }

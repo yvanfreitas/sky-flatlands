@@ -1,3 +1,4 @@
+import Status from '../status.js';
 export default class Move {
   path = [];
   finder = null;
@@ -5,6 +6,8 @@ export default class Move {
   position = { x: 0, y: 0 };
   myself = null;
   target = null;
+  blockedCount = 0;
+  //speed = 1;
 
   constructor() {
     this.path = [];
@@ -14,22 +17,29 @@ export default class Move {
     this.myself = myself;
     this.position = myself.state.position;
 
-    if (this.destination != this.position) {
-      if (this.path.length >= 1) {
-        this.doMovement();
+    let movements = 0;
+    while (movements < this.myself.state.speed) {
+      let inDestination =
+        this.position?.x == this.destination?.x && this.position?.y == this.destination?.y;
+      if (inDestination) {
+        this.clearDestination();
       } else {
-        this.traceAPath();
+        if (this.path.length >= 1) {
+          this.doMovement();
+        } else {
+          this.traceAPath();
+        }
       }
+      movements++;
+      myself.state.position = this.position;
+      myself.state.destination = this.destination;
     }
-
-    myself.state.position = this.position;
-    myself.state.destination = this.destination;
   }
   setDestination(position) {
     if (position != undefined) {
       this.destination = position;
     } else {
-      this.destination = window.core?.map?.find.randomClearLocation();
+      this.destination = window.core?.map?.find.randomClearLocation(position, 20);
     }
     this.traceAPath();
   }
@@ -64,8 +74,10 @@ export default class Move {
       return;
     }
     var pathFinderGrid = new PF.Grid(grid);
-    var pathFinder = new PF.AStarFinder({
-      diagonalMovement: PF.DiagonalMovement.Always,
+    var pathFinder = new PF.BestFirstFinder({
+      allowDiagonal: true,
+      dontCrossCorners: true,
+      heuristic: PF.Heuristic.euclidean,
     });
     this.path = pathFinder.findPath(
       this.position.x,
@@ -82,20 +94,49 @@ export default class Move {
       y: this.path[0][1],
     };
 
-    let result = window.core?.map?.moveElement(this.myself, newPosition);
-    if (result) {
+    let movementDone = window.core?.map?.moveElement(this.myself, newPosition);
+    if (movementDone) {
       this.position = newPosition;
       this.path.shift();
-      //this.myself.speak('Andei em: ' + this.position.x + ',' + this.position.y + '!');
+      this.blockedCount = 0;
+      // this.myself.speak('Andei em: ' + this.position.x + ',' + this.position.y + '!');
     } else {
-      this.myself.speak('O caminho está obstruido. Terei que achar outra rota!');
-      //this.traceAPath();
+      this.blockedCount++;
+      if (this.blockedCount == 9) {
+        this.myself.speak(
+          'O caminho está obstruido. Terei que achar outra rota! ' + this.blockedCount,
+          console.log(
+            this.myself.id +
+              ' - ' +
+              this.myself.state.position.x +
+              ',' +
+              this.myself.state.position.y +
+              ' | ' +
+              this.blockedCount,
+          ),
+        );
+        this.traceAPath();
+      }
+      if (this.blockedCount >= 10) {
+        this.myself.speak('Não consigo chegar no meu destino. Deixa pra lá! ' + this.blockedCount);
+        this.myself.state.status = Status.Stopped;
+        this.clearDestination();
+        this.blockedCount = 0;
+      }
     }
   }
   haveAValidPosition() {
     return this.position?.x != undefined && this.position?.y != undefined;
   }
   haveAValidDestination() {
-    return this.destination?.x != undefined && this.destination?.y != undefined;
+    return (
+      this.destination?.x != undefined &&
+      this.destination?.y != undefined &&
+      this.destination?.x != null &&
+      this.destination?.y != null
+    );
+  }
+  clearDestination() {
+    this.destination = null;
   }
 }

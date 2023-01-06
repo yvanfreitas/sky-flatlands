@@ -25,7 +25,7 @@ export default class Core {
     let thingsTypes = [Carrot];
     let mapSize = this.map.mapSize;
 
-    for (let index = 0; index < 50; index++) {
+    for (let index = 0; index < 10; index++) {
       let being = new beingsTypes[Math.floor(Math.random() * beingsTypes.length)]();
       being.live();
       being.teleport({
@@ -34,12 +34,12 @@ export default class Core {
       });
 
       let indexOfMove = being.runningActions.findIndex((action) => action instanceof Move);
-      being.runningActions[indexOfMove]?.setDestination();
+      //being.runningActions[indexOfMove]?.setDestination();
 
       this.elements.push(being);
     }
 
-    for (let index = 0; index < 50; index++) {
+    for (let index = 0; index < 100; index++) {
       let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
       thing.logger = true;
       thing.teleport({

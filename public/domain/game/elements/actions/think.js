@@ -1,51 +1,81 @@
 import Feelings from '../feelings.js';
+import Status from '../status.js';
 import Types from '../Types.js';
 import { See, Move, Eat } from '../actions.js';
 
 export default class Think {
+  myself;
   run(myself) {
+    this.myself = myself;
+    this.statusHandler(this.myself.state.status);
     myself.state.feelings.forEach((feeling) => {
-      this.feelingsHandler(myself, feeling);
+      this.feelingsHandler(feeling);
     });
   }
-  feelingsHandler(myself, feeling) {
+  feelingsHandler(feeling) {
     switch (feeling) {
       case Feelings.Hungry:
-        this.hungryHandler(myself);
+        this.hungryHandler();
         break;
       default:
-        myself.speak('Eu não sei lidar com esse sentimento ' + feeling + '!');
+        this.myself.speak('Eu não sei lidar com esse sentimento ' + feeling + '!');
         break;
     }
   }
-  hungryHandler(myself) {
-    let indexOfSee = myself.runningActions.findIndex((action) => action instanceof See);
-    let indexOfMove = myself.runningActions.findIndex((action) => action instanceof Move);
-    let food = myself.runningActions[indexOfSee].whereIs(Types.Food);
+  statusHandler(status) {
+    switch (status) {
+      case Status.Stopped:
+        this.stoppedHandler();
+        break;
+      case Status.Wandering:
+        this.wanderingHandler();
+        break;
+      default:
+        this.myself.speak('Eu não sei lidar com esse status ' + status + '!');
+        break;
+    }
+  }
+  hungryHandler() {
+    let indexOfSee = this.myself.runningActions.findIndex((action) => action instanceof See);
+    let indexOfMove = this.myself.runningActions.findIndex((action) => action instanceof Move);
+    let food = this.myself.runningActions[indexOfSee].whereIs(Types.Food);
 
     if (food == undefined) {
       return;
     }
 
     if (
-      myself.state.target == null ||
-      myself.state.target == undefined ||
-      myself.state.target != food
+      this.myself.state.target == null ||
+      this.myself.state.target == undefined ||
+      this.myself.state.target != food
     ) {
-      myself.state.target = food;
-      myself.runningActions[indexOfMove].setStaticTarget(food.state.position);
+      this.myself.state.target = food;
+      this.myself.runningActions[indexOfMove].setStaticTarget(food.state.position);
       return;
     }
 
-    let distanceToFood = window.core.map.find.distance(myself.state.position, food.state.position);
+    let distanceToFood = window.core.map.find.distance(
+      this.myself.state.position,
+      food.state.position,
+    );
 
     if (distanceToFood <= 2) {
-      let indexOfEat = myself.activeActions.findIndex((action) => action instanceof Eat);
-      let result = myself.activeActions[indexOfEat].execute(myself, food);
+      let indexOfEat = this.myself.activeActions.findIndex((action) => action instanceof Eat);
+      let result = this.myself.activeActions[indexOfEat].execute(this.myself, food);
       if (result) {
-        myself.state.target = null;
-        myself.runningActions[indexOfMove].destination = myself.state.position;
+        this.myself.state.target = null;
+        this.myself.runningActions[indexOfMove].clearDestination();
+        this.myself.state.status = Status.Stopped;
       }
     }
+  }
+  stoppedHandler() {
+    this.myself.state.status = Status.Wandering;
+  }
+  wanderingHandler() {
+    let indexOfMove = this.myself.runningActions.findIndex((action) => action instanceof Move);
+    let haveAValidDestination = this.myself.runningActions[indexOfMove].haveAValidDestination();
+    if (haveAValidDestination) return;
+    this.myself.runningActions[indexOfMove].setDestination();
   }
 }

@@ -25,15 +25,22 @@ export default class Find {
     return elements;
   };
 
-  randomClearLocation = function () {
-    let position = this.randomLocation();
+  randomClearLocation = function (reference, range) {
+    let position = this.randomLocation(reference, range);
     while (!isClear(this.map.grid, position)) {
       position = this.randomLocation();
     }
     return position;
   };
 
-  randomLocation = function () {
+  randomLocation = function (reference, range) {
+    if (reference && range) {
+      return {
+        x: Math.floor(Math.random() * range) + reference.x - range / 2,
+        y: Math.floor(Math.random() * range) + reference.y - range / 2,
+      };
+    }
+
     let mapSize = this.map.mapSize;
     return { x: Math.floor(Math.random() * mapSize), y: Math.floor(Math.random() * mapSize) };
   };
