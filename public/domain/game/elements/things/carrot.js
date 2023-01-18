@@ -1,6 +1,7 @@
 import Element from '../element.js';
 import { Eat } from '../actions.js';
 import Types from '../types.js';
+import CarrotSprite from '../../sprites/things/carrot.js';
 
 export default class Carrot extends Element {
   constructor() {
@@ -11,5 +12,7 @@ export default class Carrot extends Element {
     this.types.push(Types.Food);
     this.types.push(Types.Vegetable);
     this.render.miniMapColor = 'orange';
+
+    this.sprite = new CarrotSprite(this);
   }
 }

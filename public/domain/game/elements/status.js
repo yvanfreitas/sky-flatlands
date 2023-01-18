@@ -1,6 +1,7 @@
 export default class Status {
   static Walking = 'Walking';
   static Running = 'Running';
+  static Idle = 'Idle';
   static Wandering = 'Wandering';
   static Sleeping = 'Sleeping';
   static Stopped = 'Stopped';

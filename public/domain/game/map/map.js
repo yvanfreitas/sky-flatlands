@@ -1,5 +1,4 @@
 import { setBlocked, setClear, isClear, generateGrid } from './gridFunctions.js';
-import { Move } from '../elements/actions.js';
 import Find from './find.js';
 export default class Map {
   mapSize = 0;

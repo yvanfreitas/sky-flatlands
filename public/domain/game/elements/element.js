@@ -1,7 +1,8 @@
 import uuid from '../util/uuid.js';
-import { Move } from './actions.js';
-import Map from '../map/map.js';
+//import { Move } from './actions.js';
+//import Map from '../map/map.js';
 import Status from './status.js';
+import SpriteController from '../sprites/spriteController.js';
 
 export default class Element {
   id = uuid();
@@ -17,11 +18,13 @@ export default class Element {
     feelings: [],
     age: 0,
     lifespan: 0,
-    clock: 30,
+    clock: 70,
     viewRange: 100,
     status: Status.Stopped,
     speed: 1,
   };
+
+  sprite = new SpriteController(this);
   types = [];
   runningActions = [];
   passiveActions = [];

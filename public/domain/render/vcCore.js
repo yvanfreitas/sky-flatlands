@@ -1,5 +1,6 @@
 export default class VRCore {
   stage = null;
+  camera;
 
   constructor() {
     this.stage = document.createElement('a-scene');
@@ -7,7 +8,7 @@ export default class VRCore {
     document.querySelector('body').appendChild(this.stage);
 
     let ground = document.createElement('a-plane');
-    ground.setAttribute('position', '0 0 0');
+    ground.setAttribute('position', '225 0 225');
     ground.setAttribute('rotation', '-90 0 0');
     ground.setAttribute('width', '500');
     ground.setAttribute('height', '500');
@@ -16,14 +17,22 @@ export default class VRCore {
 
     let sky = document.createElement('a-sky');
     sky.setAttribute('color', '#aaCCFF');
+    sky.setAttribute('position', '225 0 225');
     document.querySelector('a-scene').appendChild(sky);
+
+    this.camera = document.createElement('a-entity');
+    this.camera.setAttribute('id', 'camera');
+    this.camera.setAttribute('camera', '');
+    this.camera.setAttribute('look-controls', '');
+    this.camera.setAttribute('wasd-controls', '');
+    this.camera.setAttribute('position', '255 1.6 255');
+    document.querySelector('a-scene').appendChild(this.camera);
 
     this.render();
   }
 
   render() {
     this.renderElements();
-
     requestAnimationFrame(() => {
       this.render();
     });
@@ -31,36 +40,33 @@ export default class VRCore {
 
   renderElements() {
     window.core?.elements?.forEach((element) => {
-      const id = '#id' + element.id.replace(/-/g, '');
-      const elementBox = document.querySelector(id);
-      if (elementBox) {
-        this.updateElement(element, elementBox);
-      } else {
-        this.addNewElement(element);
+      const id = 'id-' + element.id.replace(/-/g, '');
+      let elementBox = document.querySelector(`#` + id);
+      if (!elementBox) {
+        elementBox = this.addNewElementImage(id, element);
       }
+      this.updateElement(element, elementBox);
     });
   }
 
-  addNewElement(element) {
-    const elementBox = document.createElement('a-box');
-    const id = 'id' + element.id.replace(/-/g, '');
-
+  addNewElementImage(id, element) {
+    const elementBox = document.createElement('a-image');
     elementBox.setAttribute('id', id);
-    elementBox.setAttribute('position', {
-      x: element.state.position.x,
-      y: element.state.position.z,
-      z: element.state.position.y,
-    });
     elementBox.setAttribute('color', element.render.miniMapColor);
     this.stage.appendChild(elementBox);
+    return elementBox;
   }
 
   updateElement(element, elementBox) {
     elementBox.setAttribute('position', {
       x: element.state.position.x,
-      y: element.state.position.z,
+      y: 1,
       z: element.state.position.y,
     });
+
+    let cameraPosition = this.camera.getAttribute('position');
+    elementBox.setAttribute('src', element.sprite.getImage(cameraPosition));
+    elementBox.setAttribute('rotation', element.sprite.getRotation(cameraPosition));
   }
 
   removeElement(element) {
