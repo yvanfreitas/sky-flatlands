@@ -1,6 +1,4 @@
 import uuid from '../util/uuid.js';
-//import { Move } from './actions.js';
-//import Map from '../map/map.js';
 import Status from './status.js';
 import SpriteController from '../sprites/spriteController.js';
 
