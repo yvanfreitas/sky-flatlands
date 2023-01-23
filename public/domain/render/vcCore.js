@@ -28,6 +28,13 @@ export default class VRCore {
     this.camera.setAttribute('position', '255 1.6 255');
     document.querySelector('a-scene').appendChild(this.camera);
 
+    /*let sunSky = document.createElement('a-sun-sky');
+    document.querySelector('a-scene').appendChild(sunSky);
+
+    let sun = document.createElement('a-entity');
+    sun.setAttribute('material', 'shader: sunSky');
+    document.querySelector('a-scene').appendChild(sun);*/
+
     this.render();
   }
 
@@ -53,6 +60,9 @@ export default class VRCore {
     const elementBox = document.createElement('a-image');
     elementBox.setAttribute('id', id);
     elementBox.setAttribute('color', element.render.miniMapColor);
+    elementBox.setAttribute('look-at', '#camera');
+    elementBox.setAttribute('shadow', 'cast:true; receive:true');
+
     this.stage.appendChild(elementBox);
     return elementBox;
   }
@@ -66,11 +76,10 @@ export default class VRCore {
 
     let cameraPosition = this.camera.getAttribute('position');
     elementBox.setAttribute('src', element.sprite.getImage(cameraPosition));
-    elementBox.setAttribute('rotation', element.sprite.getRotation(cameraPosition));
   }
 
   removeElement(element) {
-    const id = '#id' + element.id.replace(/-/g, '');
+    const id = '#id-' + element.id.replace(/-/g, '');
     const elementBox = document.querySelector(id);
     if (!elementBox) return;
     elementBox.remove();

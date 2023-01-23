@@ -11,6 +11,7 @@ import { Move } from './elements/actions.js';
 
 export default class Core {
   elements = [];
+  props = [];
   map = new Map(500);
 
   constructor() {
@@ -30,18 +31,20 @@ export default class Core {
       });
 
       let indexOfMove = being.runningActions.findIndex((action) => action instanceof Move);
-      //being.runningActions[indexOfMove]?.setDestination();
-
       this.elements.push(being);
     }
 
-    for (let index = 0; index < 100; index++) {
+    for (let index = 0; index < 20; index++) {
       let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
-      thing.logger = true;
+
       thing.teleport({
         x: Math.floor(Math.random() * mapSize),
         y: Math.floor(Math.random() * mapSize),
       });
+      /*thing.teleport({
+        x: mapSize / 2,
+        y: (mapSize / 255) * index + mapSize / 2,
+      });*/
       this.elements.push(thing);
     }
 
