@@ -10,14 +10,17 @@
 - [x] Implementar visualização 3D com A-frame
 - [x] Criar base do SpriteController
 - [x] Ajustar o angulo para que os sprites sejam sempre exibidos de frente para camera.
-- [x] props (elementos não interagíveis grama, pedras eetc)
-- [ ] tiles (coisas para p chão)
+- [x] props (elementos não interagíveis grama, pedras etc)
+- [ ] props serem ignorados pela visão
+- [ ] non-blocking elements
 - [ ] Body
   - [ ] composition
   - [ ] metabolism()
   - [ ] growth()
   - [ ] age()
+- [ ] Ações terem duração
+- [ ] Save e Load State
+- [ ] Assumir o controle de um elemento
 - [ ] Sprites animados
 - [ ] Seletor de sprite de acordo com a ação do elemento
-- [ ] Dar vida ao mundo, com elementos decorativos
-- [ ] Elementos que não se mantem de frente para a câmera (ex muros)
+- [ ] tiles (coisas para p chão)
