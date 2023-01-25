@@ -102,21 +102,20 @@ export default class Move {
       this.position = newPosition;
       this.path.shift();
       this.blockedCount = 0;
-      // this.myself.speak('Andei em: ' + this.position.x + ',' + this.position.y + '!');
     } else {
       this.blockedCount++;
       if (this.blockedCount == 9) {
         this.myself.speak(
-          'O caminho está obstruido. Terei que achar outra rota! ' + this.blockedCount,
-          console.log(
+          'O caminho está obstruido. Terei que achar outra rota! ' +
+            this.blockedCount +
+            ' | ' +
             this.myself.id +
-              ' - ' +
-              state.position.x +
-              ',' +
-              state.position.y +
-              ' | ' +
-              this.blockedCount,
-          ),
+            ' - ' +
+            state.position.x +
+            ',' +
+            state.position.y +
+            ' | ' +
+            this.blockedCount,
         );
         this.traceAPath();
       }
