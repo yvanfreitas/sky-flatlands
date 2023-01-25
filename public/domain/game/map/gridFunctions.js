@@ -10,7 +10,13 @@ let setClear = function (grid, position) {
 };
 let isClear = function (grid, position) {
   if (position == undefined) return;
-  return grid[position?.x][position?.y] == 0;
+  if (grid[position?.x] == undefined) {
+    return true;
+  }
+  if (grid[position?.x][position?.y] != undefined) {
+    return grid[position?.x][position?.y] == 0;
+  }
+  return true;
 };
 let generateGrid = function (mapSize) {
   let grid = [];

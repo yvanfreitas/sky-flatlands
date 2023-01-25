@@ -1,6 +1,7 @@
+import Kinds from '../game/elements/kinds.js';
 export default class MiniMap {
   context = null;
-  tileSize = 2;
+  tileSize = 5;
 
   constructor() {
     const screen = document.createElement('canvas');
@@ -23,7 +24,9 @@ export default class MiniMap {
 
   renderElements() {
     window.core?.elements?.forEach((element) => {
-      this.draw(element);
+      if (element.kind != Kinds.Prop) {
+        this.draw(element);
+      }
     });
 
     this.draw(window.core?.elements[0]);

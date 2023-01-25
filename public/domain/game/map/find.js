@@ -1,5 +1,5 @@
 import { setBlocked, setClear, isClear, generateGrid } from './gridFunctions.js';
-
+import Kinds from '../elements/kinds.js';
 export default class Find {
   constructor(map) {
     this.map = map;
@@ -14,7 +14,10 @@ export default class Find {
         if (x < 0 || y < 0 || x >= this.map.mapSize || y >= this.map.mapSize) {
           continue;
         }
-        if (!isClear(this.map.grid, { x, y })) {
+        if (isClear(this.map.grid, { x, y })) {
+          continue;
+        }
+        if (this.map.elements[x + ',' + y]?.kind != Kinds.Prop) {
           elements.push(this.map.elements[x + ',' + y]);
         }
       }
