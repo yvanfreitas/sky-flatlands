@@ -15,10 +15,11 @@ export default class Move {
   }
   run(myself) {
     this.myself = myself;
-    this.position = myself.state.position;
+    let state = myself.getState();
+    this.position = state.position;
 
     let movements = 0;
-    while (movements < this.myself.state.speed) {
+    while (movements < state.speed) {
       let inDestination =
         this.position?.x == this.destination?.x && this.position?.y == this.destination?.y;
       if (inDestination) {
@@ -31,8 +32,9 @@ export default class Move {
         }
       }
       movements++;
-      myself.state.position = this.position;
-      myself.state.destination = this.destination;
+      state.position = this.position;
+      state.destination = this.destination;
+      myself.setState(state);
     }
   }
   setDestination(position) {
@@ -89,6 +91,7 @@ export default class Move {
     this.path.shift();
   }
   doMovement() {
+    let state = this.myself.getState();
     let newPosition = {
       x: this.path[0][0],
       y: this.path[0][1],
@@ -108,9 +111,9 @@ export default class Move {
           console.log(
             this.myself.id +
               ' - ' +
-              this.myself.state.position.x +
+              state.position.x +
               ',' +
-              this.myself.state.position.y +
+              state.position.y +
               ' | ' +
               this.blockedCount,
           ),
@@ -119,9 +122,10 @@ export default class Move {
       }
       if (this.blockedCount >= 10) {
         this.myself.speak('Não consigo chegar no meu destino. Deixa pra lá! ' + this.blockedCount);
-        this.myself.state.status = Status.Stopped;
+        state.status = Status.Stopped;
         this.clearDestination();
         this.blockedCount = 0;
+        this.myself.setState(state);
       }
     }
   }

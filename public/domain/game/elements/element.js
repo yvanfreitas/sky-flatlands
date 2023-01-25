@@ -30,14 +30,22 @@ export default class Element {
   life;
   logger = false;
   render = { miniMapColor: 'white' };
-  constructor(state) {
-    if (state != undefined) {
-      this.state = state;
-    }
+
+  getState() {
+    return this.state;
+  }
+
+  setState(state) {
+    this.state = state;
+    this.updateRender();
+  }
+
+  updateRender() {
+    window.vrCore?.renderElement(this);
   }
 
   live() {
-    if (this.life == undefined) {
+    if (this.life == undefined && this.runningActions.length > 0) {
       this.life = setInterval(this.live.bind(this), this.state.clock);
     }
     this.runningActions.forEach((action) => {
@@ -48,7 +56,9 @@ export default class Element {
     if (newPosition == undefined) {
       newPosition = window.core?.map?.find.randomClearLocation();
     }
-    this.state.position = newPosition;
+    let state = this.getState();
+    state.position = newPosition;
+    this.setState(state);
 
     window.core?.map?.addElement(this);
   }

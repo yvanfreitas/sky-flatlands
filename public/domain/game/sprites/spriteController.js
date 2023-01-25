@@ -2,7 +2,7 @@ export default class SpriteController {
   myself;
   class;
   spriteIndex = 0;
-  img = '';
+  sprite = {};
   map = {
     Idle: {
       front: {
@@ -28,13 +28,18 @@ export default class SpriteController {
   }
 
   cycle() {
-    this.img = this.map.Idle.front.img[this.spriteIndex];
+    this.sprite = {
+      img: this.map.Idle.front.img[this.spriteIndex],
+      height: this.map.Idle.front.height,
+      width: this.map.Idle.front.width,
+    };
   }
-  getImage(pointOfView) {
-    this.cycle();
 
-    return this.img;
+  getSprite(pointOfView) {
+    this.cycle();
+    return this.sprite;
   }
+
   getPosition() {
     return {
       x: myself.state.position.x,

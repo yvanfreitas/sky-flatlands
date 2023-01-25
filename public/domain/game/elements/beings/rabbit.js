@@ -2,6 +2,8 @@ import Element from '../element.js';
 import { Age, Die, Eat, Move, See, Think } from '../actions.js';
 import Types from '../types.js';
 
+import HabbitSprite from '../../sprites/beings/habbit.js';
+
 import Feelings from '../feelings.js';
 export default class Rabbit extends Element {
   constructor() {
@@ -16,6 +18,8 @@ export default class Rabbit extends Element {
     this.render.miniMapColor = 'gray';
     this.state.speed = 2;
 
+    this.sprite = new HabbitSprite(this);
     this.state.feelings.push(Feelings.Hungry);
+    this.live();
   }
 }

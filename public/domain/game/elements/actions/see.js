@@ -9,7 +9,7 @@ export default class See {
   }
   whereIs(type) {
     let elements = [];
-    elements = this.inSight?.filter((element) => element.types.includes(type));
+    elements = this.inSight?.filter((element) => element?.types?.includes(type));
     if (elements?.length <= 0 || elements == undefined) {
       return null;
     } else {

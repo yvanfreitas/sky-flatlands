@@ -6,7 +6,7 @@ export default class CarrotSprite extends SpriteController {
       front: {
         img: [`images/sprites/things/carrot.png`],
         height: 1,
-        width: 0.2,
+        width: 0.5,
       },
     },
   };

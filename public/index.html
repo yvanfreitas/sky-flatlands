@@ -34,12 +34,12 @@
     <script type="module">
       import Core from './domain/game/core.js';
       import MiniMap from './domain/render/minimap.js';
-      import VRCore from './domain/render/vcCore.js';
+      import VRCore from './domain/render/vrCore.js';
 
+      window.vrCore = new VRCore();
       window.core = new Core();
       window.core.init();
 
-      window.vrCore = new VRCore();
       //window.render = new MiniMap(screen);
     </script>
   </body>

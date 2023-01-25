@@ -39,21 +39,25 @@ export default class VRCore {
   }
 
   render() {
-    this.renderElements();
-    requestAnimationFrame(() => {
-      this.render();
-    });
+    // this.renderElements();
+    // requestAnimationFrame(() => {
+    //   this.render();
+    // });
   }
 
-  renderElements() {
-    window.core?.elements?.forEach((element) => {
-      const id = 'id-' + element.id.replace(/-/g, '');
-      let elementBox = document.querySelector(`#` + id);
-      if (!elementBox) {
-        elementBox = this.addNewElementImage(id, element);
-      }
-      this.updateElement(element, elementBox);
-    });
+  // renderElements() {
+  //   window.core?.elements?.forEach((element) => {
+  //     this.renderElement(element);
+  //   });
+  // }
+
+  renderElement(element) {
+    const id = 'id-' + element.id.replace(/-/g, '');
+    let elementBox = document.querySelector(`#` + id);
+    if (!elementBox) {
+      elementBox = this.addNewElementImage(id, element);
+    }
+    this.updateElement(element, elementBox);
   }
 
   addNewElementImage(id, element) {
@@ -68,14 +72,17 @@ export default class VRCore {
   }
 
   updateElement(element, elementBox) {
+    let cameraPosition = this.camera.getAttribute('position');
+
+    let sprite = element.sprite.getSprite(cameraPosition);
+    elementBox.setAttribute('height', sprite.height);
+    elementBox.setAttribute('width', sprite.width);
+    elementBox.setAttribute('src', sprite.img);
     elementBox.setAttribute('position', {
       x: element.state.position.x,
-      y: 1,
+      y: sprite.height / 2,
       z: element.state.position.y,
     });
-
-    let cameraPosition = this.camera.getAttribute('position');
-    elementBox.setAttribute('src', element.sprite.getImage(cameraPosition));
   }
 
   removeElement(element) {
@@ -84,12 +91,5 @@ export default class VRCore {
     if (!elementBox) return;
     elementBox.remove();
     elementBox.destroy();
-  }
-
-  draw(element) {
-    let position = element.state.position;
-
-    this.context.fillStyle = element.render.miniMapColor;
-    this.context.fillRect(position?.x, position?.y, this.tileSize, this.tileSize);
   }
 }

@@ -18,5 +18,6 @@ export default class Fox extends Element {
     this.state.feelings.push(Feelings.Hungry);
     this.render.miniMapColor = 'red';
     this.sprite = new FoxSprite(this);
+    this.live();
   }
 }

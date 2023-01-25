@@ -1,11 +1,11 @@
 import SpriteController from '../spriteController.js';
 
-export default class HabbitSprite extends SpriteController {
+export default class StoneSprite extends SpriteController {
   map = {
     Idle: {
       front: {
-        img: [`images/sprites/beings/habbit.png`],
-        height: 0.6,
+        img: [`images/sprites/props/stone.png`],
+        height: 0.4,
         width: 0.8,
       },
     },

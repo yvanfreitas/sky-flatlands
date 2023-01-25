@@ -6,6 +6,8 @@ import Map from './map/map.js';
 import Fox from './elements/beings/fox.js';
 import Rabbit from './elements/beings/rabbit.js';
 import Carrot from './elements/things/carrot.js';
+import Stone from './elements/props/stone.js';
+import Tree from './elements/props/tree.js';
 
 import { Move } from './elements/actions.js';
 
@@ -20,11 +22,12 @@ export default class Core {
   init() {
     let beingsTypes = [Fox, Rabbit];
     let thingsTypes = [Carrot];
+    let propsTypes = [Stone, Tree];
     let mapSize = this.map.mapSize;
 
     for (let index = 0; index < 10; index++) {
       let being = new beingsTypes[Math.floor(Math.random() * beingsTypes.length)]();
-      being.live();
+
       being.teleport({
         x: Math.floor(Math.random() * mapSize),
         y: Math.floor(Math.random() * mapSize),
@@ -36,16 +39,22 @@ export default class Core {
 
     for (let index = 0; index < 20; index++) {
       let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
-
+      thing.live();
       thing.teleport({
         x: Math.floor(Math.random() * mapSize),
         y: Math.floor(Math.random() * mapSize),
       });
-      /*thing.teleport({
-        x: mapSize / 2,
-        y: (mapSize / 255) * index + mapSize / 2,
-      });*/
       this.elements.push(thing);
+    }
+
+    for (let index = 0; index < 500; index++) {
+      let prop = new propsTypes[Math.floor(Math.random() * propsTypes.length)]();
+      prop.live();
+      prop.teleport({
+        x: Math.floor(Math.random() * mapSize),
+        y: Math.floor(Math.random() * mapSize),
+      });
+      this.elements.push(prop);
     }
 
     this.elements[0].logger = true;
