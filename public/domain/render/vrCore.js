@@ -5,6 +5,7 @@ export default class VRCore {
   constructor() {
     this.stage = document.createElement('a-scene');
     this.stage.setAttribute('id', 'stage');
+    this.stage.setAttribute('culling-proxy', 'far: 100');
     document.querySelector('body').appendChild(this.stage);
 
     let ground = document.createElement('a-plane');
@@ -12,38 +13,39 @@ export default class VRCore {
     ground.setAttribute('rotation', '-90 0 0');
     ground.setAttribute('width', '500');
     ground.setAttribute('height', '500');
-    ground.setAttribute('color', '#3BC874');
+    ground.setAttribute('material', {
+      shader: 'standard',
+      src: 'images/grass.png',
+      roughness: 2.5,
+      metalness: 0.0,
+      repeat: '100 100',
+    });
+
     document.querySelector('a-scene').appendChild(ground);
 
     let sky = document.createElement('a-sky');
-    sky.setAttribute('color', '#aaCCFF');
+    sky.setAttribute('src', 'images/sky.png');
     sky.setAttribute('position', '225 0 225');
     document.querySelector('a-scene').appendChild(sky);
 
     this.camera = document.createElement('a-entity');
     this.camera.setAttribute('id', 'camera');
     this.camera.setAttribute('camera', '');
+    this.camera.setAttribute('fps-counter', '');
     this.camera.setAttribute('look-controls', '');
     this.camera.setAttribute('wasd-controls', '');
     this.camera.setAttribute('position', '255 1.6 255');
     document.querySelector('a-scene').appendChild(this.camera);
 
-    /*let sunSky = document.createElement('a-sun-sky');
-    document.querySelector('a-scene').appendChild(sunSky);
-
-    let sun = document.createElement('a-entity');
-    sun.setAttribute('material', 'shader: sunSky');
-    document.querySelector('a-scene').appendChild(sun);*/
-
-    this.render();
+    //this.render();
   }
 
-  render() {
-    // this.renderElements();
-    // requestAnimationFrame(() => {
-    //   this.render();
-    // });
-  }
+  //render() {
+  // this.renderElements();
+  // requestAnimationFrame(() => {
+  //   this.render();
+  // });
+  //}
 
   // renderElements() {
   //   window.core?.elements?.forEach((element) => {
