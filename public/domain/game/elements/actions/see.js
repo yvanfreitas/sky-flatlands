@@ -3,8 +3,8 @@ export default class See {
 
   run(myself) {
     this.inSight = window.core?.map?.find.elementsAround(
-      myself.state.position,
-      myself.state.viewRange,
+      myself.getState().position,
+      myself.getState().viewRange,
     );
   }
   whereIs(type) {
