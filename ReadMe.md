@@ -12,8 +12,10 @@
 - [x] Ajustar o angulo para que os sprites sejam sempre exibidos de frente para camera.
 - [x] props (elementos não interagíveis grama, pedras etc)
 - [x] props serem ignorados pela visão
-- [ ] movimento fluído
 - [x] non-blocking elements
+- [x] mvp de modelos 3D
+- [ ] modelControler (evolução do sprite controller)
+- [ ] movimento fluído
 - [ ] Body
   - [ ] composition
   - [ ] metabolism()

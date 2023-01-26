@@ -20,7 +20,6 @@ export default class VRCore {
       metalness: 0.0,
       repeat: '100 100',
     });
-
     document.querySelector('a-scene').appendChild(ground);
 
     let sky = document.createElement('a-sky');
@@ -37,6 +36,16 @@ export default class VRCore {
     this.camera.setAttribute('position', '255 1.6 255');
     document.querySelector('a-scene').appendChild(this.camera);
 
+    let cursor = document.createElement('a-cursor');
+    this.camera.appendChild(cursor);
+
+    let fox = document.createElement('a-entity');
+    fox.setAttribute('gltf-model', 'url(images/sprites/Fox_Animations.gltf)');
+    fox.setAttribute('scale', '0.5 0.5 0.5');
+    fox.setAttribute('position', '255 0 251');
+    fox.setAttribute('animation-mixer', 'clip: Run');
+    fox.setAttribute('onClick', 'this.setAttribute("animation-mixer", "clip: Jump; loop: once");');
+    document.querySelector('a-scene').appendChild(fox);
     //this.render();
   }
 
