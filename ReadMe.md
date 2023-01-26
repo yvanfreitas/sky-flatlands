@@ -11,8 +11,9 @@
 - [x] Criar base do SpriteController
 - [x] Ajustar o angulo para que os sprites sejam sempre exibidos de frente para camera.
 - [x] props (elementos não interagíveis grama, pedras etc)
-- [ ] props serem ignorados pela visão
-- [ ] non-blocking elements
+- [x] props serem ignorados pela visão
+- [ ] movimento fluído
+- [x] non-blocking elements
 - [ ] Body
   - [ ] composition
   - [ ] metabolism()
