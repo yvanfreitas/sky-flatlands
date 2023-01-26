@@ -9,5 +9,6 @@ export default class Stone extends Element {
     this.kind = Kinds.Prop;
     this.types.push(Types.Prop);
     this.sprite = new StoneSprite(this);
+    this.patchBlocker = false;
   }
 }

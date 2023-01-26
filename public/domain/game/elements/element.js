@@ -21,7 +21,7 @@ export default class Element {
     status: Status.Stopped,
     speed: 1,
   };
-
+  patchBlocker = true;
   sprite = new SpriteController(this);
   types = [];
   runningActions = [];
@@ -60,7 +60,7 @@ export default class Element {
     state.position = newPosition;
     this.setState(state);
 
-    window.core?.map?.addElement(this);
+    if (this.patchBlocker) window.core?.map?.addElement(this);
   }
   speak(message) {
     if (this.logger) {
