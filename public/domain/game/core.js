@@ -20,6 +20,18 @@ export default class Core {
     let keyboardListener = new KeyboardListener(document);
   }
   init() {
+    this.generateRandomWorld();
+  }
+  removeAElement(element) {
+    window.vrCore.removeElement(element);
+    window.core?.map?.removeElement(element);
+    let index = this.elements.indexOf(element);
+    if (index >= 0) {
+      this.elements.splice(index, 1);
+    }
+    element = null;
+  }
+  generateRandomWorld() {
     let beingsTypes = [Fox, Rabbit];
     let thingsTypes = [Carrot];
     let propsTypes = [Stone, Tree];
@@ -47,7 +59,7 @@ export default class Core {
       this.elements.push(thing);
     }
 
-    for (let index = 0; index < 500; index++) {
+    for (let index = 0; index < 300; index++) {
       let prop = new propsTypes[Math.floor(Math.random() * propsTypes.length)]();
       prop.live();
       prop.teleport({
@@ -59,14 +71,5 @@ export default class Core {
 
     this.elements[0].logger = true;
     this.elements[0].render.miniMapColor = 'purple';
-  }
-  removeAElement(element) {
-    window.vrCore.removeElement(element);
-    window.core?.map?.removeElement(element);
-    let index = this.elements.indexOf(element);
-    if (index >= 0) {
-      this.elements.splice(index, 1);
-    }
-    element = null;
   }
 }
