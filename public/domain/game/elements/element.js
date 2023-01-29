@@ -22,7 +22,8 @@ export default class Element {
     speed: 1,
   };
   patchBlocker = true;
-  sprite = new SpriteController(this);
+  sprite;
+  modelController;
   types = [];
   runningActions = [];
   passiveActions = [];
@@ -41,7 +42,8 @@ export default class Element {
   }
 
   updateRender() {
-    window.vrCore?.renderElement(this);
+    if (this.sprite != undefined) window.vrCore?.renderElement(this);
+    if (this.modelController != undefined) this.modelController.update();
   }
 
   live() {
