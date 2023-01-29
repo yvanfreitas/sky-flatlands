@@ -2,8 +2,7 @@ import Element from '../element.js';
 import { Age, Die, Eat, Move, See, Think } from '../actions.js';
 import Types from '../types.js';
 import Kinds from '../kinds.js';
-import FoxSprite from '../../sprites/beings/fox.js';
-
+import FoxModelController from '../../modelControllers/fox.js';
 import Feelings from '../feelings.js';
 
 export default class Fox extends Element {
@@ -19,7 +18,7 @@ export default class Fox extends Element {
     this.types.push(Types.Carnivorous);
     this.state.feelings.push(Feelings.Hungry);
     this.render.miniMapColor = 'red';
-    this.sprite = new FoxSprite(this);
+    this.modelController = new FoxModelController(this);
     this.live();
   }
 }
