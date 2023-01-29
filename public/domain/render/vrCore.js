@@ -38,30 +38,9 @@ export default class VRCore {
 
     let cursor = document.createElement('a-cursor');
     this.camera.appendChild(cursor);
-
-    let fox = document.createElement('a-entity');
-    fox.setAttribute('gltf-model', 'url(images/sprites/Fox_Animations.gltf)');
-    fox.setAttribute('scale', '0.5 0.5 0.5');
-    fox.setAttribute('position', '255 0 251');
-    fox.setAttribute('animation-mixer', 'clip: Run');
-    fox.setAttribute('onClick', 'this.setAttribute("animation-mixer", "clip: Jump; loop: once");');
-    document.querySelector('a-scene').appendChild(fox);
-    //this.render();
   }
 
-  //render() {
-  // this.renderElements();
-  // requestAnimationFrame(() => {
-  //   this.render();
-  // });
-  //}
-
-  // renderElements() {
-  //   window.core?.elements?.forEach((element) => {
-  //     this.renderElement(element);
-  //   });
-  // }
-
+  // ----- elementos 2d
   renderElement(element) {
     const id = 'id-' + element.id.replace(/-/g, '');
     let elementBox = document.querySelector(`#` + id);
@@ -96,11 +75,60 @@ export default class VRCore {
     });
   }
 
+  // ----- modelos 3d
+  upsertElementModel(entity3d) {
+    const id = 'id-' + entity3d.id.replace(/-/g, '');
+    let domElement = document.querySelector(`#` + id);
+    if (!domElement) {
+      domElement = this.createDomElement(id);
+    }
+    this.updateDomElement(entity3d, domElement);
+  }
+
+  createDomElement(id) {
+    const domElement = document.createElement('a-entity');
+    domElement.setAttribute('id', id);
+    domElement.setAttribute('shadow', 'cast:true; receive:true');
+    this.stage.appendChild(domElement);
+    return domElement;
+  }
+
+  updateDomElement(entity3d, domElement) {
+    const currentScale = domElement.getAttribute('scale');
+    const currentModel = domElement.getAttribute('gltf-model');
+    const currentAnimation = domElement.getAttribute('animation-mixer');
+    const currentPosition = domElement.getAttribute('position');
+    const currentRotation = domElement.getAttribute('rotation');
+
+    if (currentScale != entity3d.scale) domElement.setAttribute('scale', entity3d.scale);
+
+    if (currentModel != entity3d.model) domElement.setAttribute('gltf-model', entity3d.model);
+
+    const animationMixer = this.mapAnimationToMixer(entity3d.animation);
+    if (currentAnimation != animationMixer)
+      domElement.setAttribute('animation-mixer', animationMixer);
+
+    if (currentPosition != entity3d.position)
+      domElement.setAttribute('position', entity3d.position);
+
+    if (currentRotation != entity3d.rotation)
+      domElement.setAttribute('rotation', entity3d.rotation);
+  }
+
+  mapAnimationToMixer(animation) {
+    return `clip: ${animation}`;
+  }
+
   removeElement(element) {
     const id = '#id-' + element.id.replace(/-/g, '');
     const elementBox = document.querySelector(id);
     if (!elementBox) return;
     elementBox.remove();
     elementBox.destroy();
+  }
+
+  getCameraPosition() {
+    let rawPosition = this.camera.getAttribute('position');
+    return { x: rawPosition.x, y: rawPosition.z };
   }
 }
