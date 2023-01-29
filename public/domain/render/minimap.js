@@ -17,9 +17,16 @@ export default class MiniMap {
     this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 
     this.renderElements();
+    this.renderCamera();
     requestAnimationFrame(() => {
       this.render();
     });
+  }
+
+  renderCamera() {
+    this.context.fillStyle = 'blue';
+    const position = window.vrCore?.getCameraPosition();
+    this.context.fillRect(position?.x, position?.y, this.tileSize, this.tileSize);
   }
 
   renderElements() {
