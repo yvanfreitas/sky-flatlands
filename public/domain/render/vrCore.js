@@ -33,7 +33,7 @@ export default class VRCore {
     this.camera.setAttribute('fps-counter', '');
     this.camera.setAttribute('look-controls', '');
     this.camera.setAttribute('wasd-controls', '');
-    this.camera.setAttribute('position', '255 1.6 255');
+    this.camera.setAttribute('position', '75 1.6 75');
     document.querySelector('a-scene').appendChild(this.camera);
 
     let cursor = document.createElement('a-cursor');
@@ -98,21 +98,21 @@ export default class VRCore {
     const currentModel = domElement.getAttribute('gltf-model');
     const currentAnimation = domElement.getAttribute('animation-mixer');
     const currentPosition = domElement.getAttribute('position');
-    const currentRotation = domElement.getAttribute('rotation');
+    const currentRotation = domElement.getAttribute('look-at');
 
     if (currentScale != entity3d.scale) domElement.setAttribute('scale', entity3d.scale);
 
     if (currentModel != entity3d.model) domElement.setAttribute('gltf-model', entity3d.model);
 
     const animationMixer = this.mapAnimationToMixer(entity3d.animation);
-    if (currentAnimation != animationMixer)
+    if (currentAnimation != animationMixer && animationMixer != null)
       domElement.setAttribute('animation-mixer', animationMixer);
 
-    if (currentPosition != entity3d.position)
+    if (currentPosition != entity3d.position && entity3d.position != null)
       domElement.setAttribute('position', entity3d.position);
 
-    if (currentRotation != entity3d.rotation)
-      domElement.setAttribute('rotation', entity3d.rotation);
+    if (currentRotation != entity3d.lookDirection && entity3d.lookDirection != null)
+      domElement.setAttribute('look-at', entity3d.lookDirection);
   }
 
   mapAnimationToMixer(animation) {

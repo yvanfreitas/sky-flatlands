@@ -1,3 +1,4 @@
+import { Move } from '../elements/actions.js';
 export default class ModelController {
   myself;
   class;
@@ -7,7 +8,7 @@ export default class ModelController {
     position: null,
     animation: null,
     scale: '1 1 1',
-    rotation: null,
+    lookDirection: null,
   };
 
   constructor(element) {
@@ -20,7 +21,7 @@ export default class ModelController {
     if (this.entity3d.id == null) return;
     this.setPosition();
     this.setAnimation();
-    this.setRotation();
+    this.setLookDirection();
     window.vrCore?.upsertElementModel(this.entity3d);
   }
 
@@ -28,8 +29,22 @@ export default class ModelController {
     this.entity3d.animation = 'Run';
   }
 
-  setRotation() {
-    this.entity3d.rotation = '0 45 0';
+  setLookDirection() {
+    const indexOfMove = this.myself.runningActions.findIndex((action) => action instanceof Move);
+    const path = this.myself.runningActions[indexOfMove].getPath();
+
+    if (path.length == 0) return;
+
+    const nextPosition = {
+      x: path[0][0],
+      y: path[0][1],
+    };
+
+    this.entity3d.lookDirection = {
+      x: nextPosition.x,
+      y: 0,
+      z: nextPosition.y,
+    };
   }
 
   setPosition() {

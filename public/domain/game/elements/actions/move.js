@@ -142,4 +142,7 @@ export default class Move {
   clearDestination() {
     this.destination = null;
   }
+  getPath() {
+    return this.path;
+  }
 }
