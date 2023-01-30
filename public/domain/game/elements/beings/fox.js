@@ -1,9 +1,9 @@
 import Element from '../element.js';
 import { Age, Die, Eat, Move, See, Think } from '../actions.js';
-import Types from '../types.js';
-import Kinds from '../kinds.js';
-import FoxModelController from '../../modelControllers/fox.js';
-import Feelings from '../feelings.js';
+import Types from '../enuns/types.js';
+import Kinds from '../enuns/kinds.js';
+import FoxModelController from '../../modelControllers/beigns/fox.js';
+import Feelings from '../enuns/feelings.js';
 
 export default class Fox extends Element {
   constructor() {

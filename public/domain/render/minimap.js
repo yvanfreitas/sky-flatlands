@@ -1,4 +1,4 @@
-import Kinds from '../game/elements/kinds.js';
+import Kinds from '../game/elements/enuns/kinds.js';
 export default class MiniMap {
   context = null;
   tileSize = 5;

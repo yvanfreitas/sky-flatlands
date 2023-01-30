@@ -1,4 +1,4 @@
-import Status from '../status.js';
+import Status from '../enuns/status.js';
 export default class Move {
   path = [];
   finder = null;
@@ -104,7 +104,7 @@ export default class Move {
       this.blockedCount = 0;
     } else {
       this.blockedCount++;
-      if (this.blockedCount == 9) {
+      if (this.blockedCount == 200) {
         this.myself.speak(
           'O caminho está obstruido. Terei que achar outra rota! ' +
             this.blockedCount +
@@ -119,7 +119,8 @@ export default class Move {
         );
         this.traceAPath();
       }
-      if (this.blockedCount >= 10) {
+      if (this.blockedCount > 200) {
+        console.log('travei');
         this.myself.speak('Não consigo chegar no meu destino. Deixa pra lá! ' + this.blockedCount);
         state.status = Status.Stopped;
         this.clearDestination();

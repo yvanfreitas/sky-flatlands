@@ -15,7 +15,7 @@ export default class VRCore {
     ground.setAttribute('height', '500');
     ground.setAttribute('material', {
       shader: 'standard',
-      src: 'images/grass.png',
+      src: 'assets/images/grass.png',
       roughness: 2.5,
       metalness: 0.0,
       repeat: '100 100',
@@ -23,7 +23,7 @@ export default class VRCore {
     document.querySelector('a-scene').appendChild(ground);
 
     let sky = document.createElement('a-sky');
-    sky.setAttribute('src', 'images/sky.png');
+    sky.setAttribute('src', 'assets/images/sky.png');
     sky.setAttribute('position', '225 0 225');
     document.querySelector('a-scene').appendChild(sky);
 
@@ -33,7 +33,7 @@ export default class VRCore {
     this.camera.setAttribute('fps-counter', '');
     this.camera.setAttribute('look-controls', '');
     this.camera.setAttribute('wasd-controls', '');
-    this.camera.setAttribute('position', '75 1.6 75');
+    this.camera.setAttribute('position', '50 1.6 50');
     document.querySelector('a-scene').appendChild(this.camera);
 
     let cursor = document.createElement('a-cursor');
@@ -98,7 +98,8 @@ export default class VRCore {
     const currentModel = domElement.getAttribute('gltf-model');
     const currentAnimation = domElement.getAttribute('animation-mixer');
     const currentPosition = domElement.getAttribute('position');
-    const currentRotation = domElement.getAttribute('look-at');
+    const currentLookAt = domElement.getAttribute('look-at');
+    const currentRotation = domElement.getAttribute('rotation');
 
     if (currentScale != entity3d.scale) domElement.setAttribute('scale', entity3d.scale);
 
@@ -111,8 +112,11 @@ export default class VRCore {
     if (currentPosition != entity3d.position && entity3d.position != null)
       domElement.setAttribute('position', entity3d.position);
 
-    if (currentRotation != entity3d.lookDirection && entity3d.lookDirection != null)
+    if (currentLookAt != entity3d.lookDirection && entity3d.lookDirection != null)
       domElement.setAttribute('look-at', entity3d.lookDirection);
+
+    if (currentRotation != entity3d.rotation && entity3d.rotation != null)
+      domElement.setAttribute('rotation', entity3d.rotation);
   }
 
   mapAnimationToMixer(animation) {

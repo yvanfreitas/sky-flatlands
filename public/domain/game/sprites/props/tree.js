@@ -4,7 +4,7 @@ export default class TreeSprite extends SpriteController {
   map = {
     Idle: {
       front: {
-        img: [`images/sprites/props/tree.gif`],
+        img: [`assets/sprites/props/tree.gif`],
         height: 5,
         width: 2,
       },

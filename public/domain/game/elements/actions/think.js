@@ -1,6 +1,6 @@
-import Feelings from '../feelings.js';
-import Status from '../status.js';
-import Types from '../Types.js';
+import Feelings from '../enuns/feelings.js';
+import Status from '../enuns/status.js';
+import Types from '../enuns/types.js';
 import { See, Move, Eat } from '../actions.js';
 
 export default class Think {

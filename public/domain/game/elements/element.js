@@ -1,6 +1,5 @@
 import uuid from '../util/uuid.js';
-import Status from './status.js';
-import SpriteController from '../sprites/spriteController.js';
+import Status from './enuns/status.js';
 
 export default class Element {
   id = uuid();
@@ -16,7 +15,7 @@ export default class Element {
     feelings: [],
     age: 0,
     lifespan: 0,
-    clock: 70,
+    clock: 100,
     viewRange: 100,
     status: Status.Stopped,
     speed: 1,
