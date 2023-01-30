@@ -25,7 +25,7 @@ export default class MiniMap {
 
   renderCamera() {
     this.context.fillStyle = 'blue';
-    const position = window.vrCore?.getCameraPosition();
+    const position = window.aFrameCore?.getCameraPosition();
     this.context.fillRect(position?.x, position?.y, this.tileSize, this.tileSize);
   }
 

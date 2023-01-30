@@ -41,7 +41,7 @@ export default class Element {
   }
 
   updateRender() {
-    if (this.sprite != undefined) window.vrCore?.renderElement(this);
+    if (this.sprite != undefined) window.aFrameCore?.renderElement(this);
     if (this.modelController != undefined) this.modelController.update();
   }
 

@@ -1,4 +1,4 @@
-export default class VRCore {
+export default class AFrameCore {
   stage = null;
   camera;
 

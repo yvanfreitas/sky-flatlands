@@ -23,7 +23,7 @@ export default class ModelController {
     this.setPosition();
     this.setAnimation();
     if (this.entity3d.rotation == null) this.setLookDirection();
-    window.vrCore?.upsertElementModel(this.entity3d);
+    window.aFrameCore?.upsertElementModel(this.entity3d);
   }
 
   setAnimation() {

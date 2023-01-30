@@ -33,7 +33,7 @@ import { Move } from './elements/actions.js';
 export default class Core {
   elements = [];
   props = [];
-  map = new Map(500);
+  map = new Map(250);
 
   constructor() {
     let keyboardListener = new KeyboardListener(document);
@@ -42,7 +42,7 @@ export default class Core {
     this.generateRandomWorld();
   }
   removeAElement(element) {
-    window.vrCore.removeElement(element);
+    window.aFrameCore.removeElement(element);
     window.core?.map?.removeElement(element);
     let index = this.elements.indexOf(element);
     if (index >= 0) {
