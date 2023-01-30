@@ -14,7 +14,8 @@
 - [x] props serem ignorados pela visão
 - [x] non-blocking elements
 - [x] mvp de modelos 3D
-- [ ] modelControler (evolução do sprite controller)
+- [x] modelControler (evolução do sprite controller)
+- [x] adicionar pacote de props
 - [ ] movimento fluído
 - [ ] Body
   - [ ] composition
@@ -22,8 +23,8 @@
   - [ ] growth()
   - [ ] age()
 - [ ] Ações terem duração
-- [ ] Save e Load State
 - [ ] Assumir o controle de um elemento
-- [ ] Sprites animados
-- [ ] Seletor de sprite de acordo com a ação do elemento
+- [ ] Seletor de animações
 - [ ] tiles (coisas para p chão)
+- [ ] Save e Load State
+- [ ] Modo editor
