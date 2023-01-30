@@ -6,9 +6,28 @@ import Map from './map/map.js';
 import Fox from './elements/beings/fox.js';
 import Rabbit from './elements/beings/rabbit.js';
 import Carrot from './elements/things/carrot.js';
-import Stone from './elements/props/stone.js';
-import Tree from './elements/props/tree.js';
-
+import {
+  Buds,
+  Bush,
+  Conifer,
+  DeadTrunk,
+  Flora,
+  Flower,
+  FlowerBush,
+  Fungus,
+  Grass,
+  Herb,
+  Log,
+  Pine,
+  Plant,
+  Rock,
+  Root,
+  Shrub,
+  TreeE,
+  TreeF,
+  TreeGiant,
+  TreeSimple,
+} from './elements/props.js';
 import { Move } from './elements/actions.js';
 
 export default class Core {
@@ -32,9 +51,29 @@ export default class Core {
     element = null;
   }
   generateRandomWorld() {
-    let beingsTypes = [Fox, Rabbit];
+    let beingsTypes = [Fox];
     let thingsTypes = [Carrot];
-    let propsTypes = [Stone, Tree];
+    let propsTypes = [
+      Buds,
+      Bush,
+      Conifer,
+      DeadTrunk,
+      Flora,
+      Flower,
+      FlowerBush,
+      Fungus,
+      Grass,
+      Herb,
+      Log,
+      Pine,
+      Plant,
+      Rock,
+      Root,
+      TreeE,
+      TreeF,
+      TreeGiant,
+      TreeSimple,
+    ];
     let mapSize = this.map.mapSize;
 
     for (let index = 0; index < 10; index++) {
@@ -49,7 +88,7 @@ export default class Core {
       this.elements.push(being);
     }
 
-    for (let index = 0; index < 20; index++) {
+    for (let index = 0; index < 1; index++) {
       let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
       thing.live();
       thing.teleport({
@@ -59,7 +98,7 @@ export default class Core {
       this.elements.push(thing);
     }
 
-    for (let index = 0; index < 300; index++) {
+    for (let index = 0; index < 500; index++) {
       let prop = new propsTypes[Math.floor(Math.random() * propsTypes.length)]();
       prop.live();
       prop.teleport({

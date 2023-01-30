@@ -1,5 +1,5 @@
 import { setBlocked, setClear, isClear, generateGrid } from './gridFunctions.js';
-import Kinds from '../elements/kinds.js';
+import Kinds from '../elements/enuns/kinds.js';
 export default class Find {
   constructor(map) {
     this.map = map;

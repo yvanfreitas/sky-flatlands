@@ -1,8 +1,8 @@
 import Element from '../element.js';
 import { Eat } from '../actions.js';
-import Types from '../types.js';
+import Types from '../enuns/types.js';
 import CarrotSprite from '../../sprites/things/carrot.js';
-import Kinds from '../kinds.js';
+import Kinds from '../enuns/kinds.js';
 
 export default class Carrot extends Element {
   constructor() {
