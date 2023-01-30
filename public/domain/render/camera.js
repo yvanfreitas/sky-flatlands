@@ -22,7 +22,9 @@ export default class Camera {
       element = window.core?.elements[0];
     }
     this.following = element;
-    //this.domElement.setAttribute('spectator', 'true');
+  }
+  unFollow() {
+    this.following = null;
   }
   update(element) {
     const currentPosition = element.getAttribute('position');
