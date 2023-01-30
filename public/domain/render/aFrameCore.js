@@ -71,6 +71,7 @@ export default class AFrameCore {
     if (!domElement) {
       domElement = this.createDomElement(id);
     }
+    if (this.camera.following?.id == entity3d.id) this.camera.update(domElement);
     this.updateDomElement(entity3d, domElement);
   }
 

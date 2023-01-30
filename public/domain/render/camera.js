@@ -1,5 +1,6 @@
 export default class Camera {
   domElement;
+  following = null;
 
   constructor() {
     this.domElement = document.createElement('a-entity');
@@ -16,7 +17,23 @@ export default class Camera {
     //this.camera.appendChild(cursor);
   }
 
-  follow(element) {}
+  follow(element) {
+    if (element == undefined) {
+      element = window.core?.elements[0];
+    }
+    this.following = element;
+    //this.domElement.setAttribute('spectator', 'true');
+  }
+  update(element) {
+    const currentPosition = element.getAttribute('position');
+
+    this.domElement.setAttribute('position', {
+      x: currentPosition.x,
+      z: currentPosition.z,
+      y: 1.6,
+    });
+  }
+
   lookAt(position) {}
   setLocation(position) {}
 }
