@@ -1,7 +1,7 @@
 import Kinds from '../game/elements/enuns/kinds.js';
 export default class MiniMap {
   context = null;
-  tileSize = 5;
+  tileSize = 10;
 
   constructor() {
     const screen = document.createElement('canvas');

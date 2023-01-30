@@ -33,7 +33,7 @@ import { Move } from './elements/actions.js';
 export default class Core {
   elements = [];
   props = [];
-  map = new Map(250);
+  map = new Map(500);
 
   constructor() {
     let keyboardListener = new KeyboardListener(document);
@@ -98,7 +98,7 @@ export default class Core {
       this.elements.push(thing);
     }
 
-    for (let index = 0; index < 500; index++) {
+    for (let index = 0; index < 200; index++) {
       let prop = new propsTypes[Math.floor(Math.random() * propsTypes.length)]();
       prop.live();
       prop.teleport({

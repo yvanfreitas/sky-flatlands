@@ -16,6 +16,8 @@
 - [x] mvp de modelos 3D
 - [x] modelControler (evolução do sprite controller)
 - [x] adicionar pacote de props
+- [x] barra de menu
+- [ ] Camera 3ª pessoa
 - [ ] movimento fluído
 - [ ] Body
   - [ ] composition

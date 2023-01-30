@@ -1,3 +1,5 @@
+import Camera from './camera.js';
+
 export default class AFrameCore {
   stage = null;
   camera;
@@ -5,7 +7,6 @@ export default class AFrameCore {
   constructor() {
     this.stage = document.createElement('a-scene');
     this.stage.setAttribute('id', 'stage');
-    this.stage.setAttribute('culling-proxy', 'far: 100');
     document.querySelector('body').appendChild(this.stage);
 
     let ground = document.createElement('a-plane');
@@ -27,17 +28,7 @@ export default class AFrameCore {
     sky.setAttribute('position', '225 0 225');
     document.querySelector('a-scene').appendChild(sky);
 
-    this.camera = document.createElement('a-entity');
-    this.camera.setAttribute('id', 'camera');
-    this.camera.setAttribute('camera', '');
-    this.camera.setAttribute('fps-counter', '');
-    this.camera.setAttribute('look-controls', '');
-    this.camera.setAttribute('wasd-controls', '');
-    this.camera.setAttribute('position', '50 1.6 50');
-    document.querySelector('a-scene').appendChild(this.camera);
-
-    let cursor = document.createElement('a-cursor');
-    this.camera.appendChild(cursor);
+    this.camera = new Camera();
   }
 
   // ----- elementos 2d
@@ -62,9 +53,7 @@ export default class AFrameCore {
   }
 
   updateElement(element, elementBox) {
-    let cameraPosition = this.camera.getAttribute('position');
-
-    let sprite = element.sprite.getSprite(cameraPosition);
+    let sprite = element.sprite.getSprite();
     elementBox.setAttribute('height', sprite.height);
     elementBox.setAttribute('width', sprite.width);
     elementBox.setAttribute('src', sprite.img);
@@ -132,7 +121,7 @@ export default class AFrameCore {
   }
 
   getCameraPosition() {
-    let rawPosition = this.camera.getAttribute('position');
+    let rawPosition = this.camera.domElement.getAttribute('position');
     return { x: rawPosition.x, y: rawPosition.z };
   }
 }
