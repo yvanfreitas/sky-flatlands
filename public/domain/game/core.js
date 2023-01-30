@@ -50,9 +50,42 @@ export default class Core {
     }
     element = null;
   }
-  generateRandomWorld() {
+  removeAllElements() {
+    this.elements.forEach((element) => {
+      element.remove();
+    });
+  }
+  addRandomBeings(quantity) {
     let beingsTypes = [Fox];
+    let mapSize = this.map.mapSize;
+
+    for (let index = 0; index < quantity; index++) {
+      let being = new beingsTypes[Math.floor(Math.random() * beingsTypes.length)]();
+
+      being.teleport({
+        x: Math.floor(Math.random() * mapSize),
+        y: Math.floor(Math.random() * mapSize),
+      });
+
+      let indexOfMove = being.runningActions.findIndex((action) => action instanceof Move);
+      this.elements.push(being);
+    }
+  }
+  addRandomThings(quantity) {
     let thingsTypes = [Carrot];
+    let mapSize = this.map.mapSize;
+
+    for (let index = 0; index < quantity; index++) {
+      let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
+      thing.live();
+      thing.teleport({
+        x: Math.floor(Math.random() * mapSize),
+        y: Math.floor(Math.random() * mapSize),
+      });
+      this.elements.push(thing);
+    }
+  }
+  addRandomProps(quantity) {
     let propsTypes = [
       Buds,
       Bush,
@@ -76,29 +109,7 @@ export default class Core {
     ];
     let mapSize = this.map.mapSize;
 
-    for (let index = 0; index < 10; index++) {
-      let being = new beingsTypes[Math.floor(Math.random() * beingsTypes.length)]();
-
-      being.teleport({
-        x: Math.floor(Math.random() * mapSize),
-        y: Math.floor(Math.random() * mapSize),
-      });
-
-      let indexOfMove = being.runningActions.findIndex((action) => action instanceof Move);
-      this.elements.push(being);
-    }
-
-    for (let index = 0; index < 1; index++) {
-      let thing = new thingsTypes[Math.floor(Math.random() * thingsTypes.length)]();
-      thing.live();
-      thing.teleport({
-        x: Math.floor(Math.random() * mapSize),
-        y: Math.floor(Math.random() * mapSize),
-      });
-      this.elements.push(thing);
-    }
-
-    for (let index = 0; index < 200; index++) {
+    for (let index = 0; index < quantity; index++) {
       let prop = new propsTypes[Math.floor(Math.random() * propsTypes.length)]();
       prop.live();
       prop.teleport({
@@ -107,6 +118,12 @@ export default class Core {
       });
       this.elements.push(prop);
     }
+  }
+
+  generateRandomWorld() {
+    this.addRandomBeings(50);
+    this.addRandomThings(20);
+    this.addRandomProps(200);
 
     this.elements[0].logger = true;
     this.elements[0].render.miniMapColor = 'purple';
